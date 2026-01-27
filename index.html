@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Language Consonants Practice</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+Telugu:wght@400;700&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --text-primary: #f0f0f5;
+            --text-secondary: #8888aa;
+            --accent-green: #22c55e;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --border-color: #2a2a3a;
+            --canvas-bg: #fefefe;
+            --stroke-color: #1a1a25;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(245, 158, 11, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        /* Language Tabs */
+        .language-tabs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .lang-tab {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lang-tab:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .lang-tab.active {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+            border-color: transparent;
+            color: white;
+            font-weight: 500;
+        }
+
+        .lang-tab .native {
+            font-size: 1.1rem;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Mode Toggle */
+        .mode-toggle {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .mode-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .mode-btn:hover {
+            border-color: var(--accent-orange);
+        }
+
+        .mode-btn.active {
+            background: var(--accent-orange);
+            border-color: var(--accent-orange);
+            color: white;
+        }
+
+        /* Main Practice Area */
+        .practice-area {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .practice-area {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Character Display */
+        .character-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .target-char {
+            font-size: 8rem;
+            line-height: 1;
+            margin: 1rem 0;
+            opacity: 0.95;
+        }
+
+        .char-info {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .char-info .romanization {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .nav-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            transform: scale(1.1);
+        }
+
+        /* Canvas Area */
+        .canvas-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .canvas-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .canvas-title {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .canvas-tools {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tool-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .tool-btn:hover {
+            border-color: var(--accent-green);
+            color: var(--text-primary);
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .writing-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        #bgCanvas {
+            background: var(--canvas-bg);
+            z-index: 1;
+        }
+
+        #guideCanvas {
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        #drawCanvas {
+            z-index: 3;
+        }
+
+        .canvas-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .action-btn {
+            padding: 0.75rem 2rem;
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--accent-green), #16a34a);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .action-btn.secondary:hover {
+            border-color: var(--accent-blue);
+        }
+
+        /* Progress Panel */
+        .progress-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .progress-title {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .char-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+        }
+
+        .char-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .char-cell.unpracticed {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        .char-cell.practiced {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .char-cell.current {
+            background: var(--accent-blue);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .char-cell:hover:not(.current) {
+            transform: scale(1.05);
+            border-color: var(--accent-orange);
+        }
+
+        /* Stroke Width Slider */
+        .stroke-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+
+        .stroke-control label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .stroke-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border-color);
+            outline: none;
+        }
+
+        .stroke-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .stroke-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Guide Toggle */
+        .guide-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 3px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        input:checked + .toggle-slider {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(22px);
+            background: white;
+        }
+
+        .toggle-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        /* Font classes */
+        .burmese { font-family: 'Noto Sans Myanmar', sans-serif; }
+        .devanagari { font-family: 'Noto Sans Devanagari', sans-serif; }
+        .japanese { font-family: 'Noto Sans JP', sans-serif; }
+        .korean { font-family: 'Noto Sans KR', sans-serif; }
+        .chinese { font-family: 'Noto Sans SC', sans-serif; }
+        .telugu { font-family: 'Noto Sans Telugu', sans-serif; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .target-char {
+                font-size: 5rem;
+            }
+
+            .practice-area {
+                gap: 1rem;
+            }
+
+            .char-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <div class="container">
+        <header>
+            <h1>✍️ Consonants Practice</h1>
+            <p class="subtitle">Master writing across multiple scripts</p>
+        </header>
+
+        <!-- Language Tabs -->
+        <div class="language-tabs" id="languageTabs">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="practicedCount">0</div>
+                <div class="stat-label">Practiced</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="totalCount">0</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="progressPercent">0%</div>
+                <div class="stat-label">Progress</div>
+            </div>
+        </div>
+
+        <!-- Mode Toggle -->
+        <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="sequential">Sequential</button>
+            <button class="mode-btn" data-mode="random">Random</button>
+            <button class="mode-btn" data-mode="unpracticed">Unpracticed Only</button>
+        </div>
+
+        <!-- Main Practice Area -->
+        <div class="practice-area">
+            <!-- Character Display -->
+            <div class="character-panel fade-in">
+                <div class="canvas-title">Current Character</div>
+                <div class="target-char" id="targetChar">က</div>
+                <div class="char-info">
+                    <div class="romanization" id="romanization">ka</div>
+                    <div id="charDescription">Consonant 1 of 33</div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="nav-btn" id="prevBtn">←</button>
+                    <button class="nav-btn" id="randomBtn">🎲</button>
+                    <button class="nav-btn" id="nextBtn">→</button>
+                </div>
+            </div>
+
+            <!-- Canvas Area -->
+            <div class="canvas-panel fade-in" style="animation-delay: 0.1s;">
+                <div class="canvas-header">
+                    <span class="canvas-title">Practice Writing</span>
+                    <div class="canvas-tools">
+                        <button class="tool-btn" id="undoBtn">↩ Undo</button>
+                        <button class="tool-btn" id="clearBtn">🗑 Clear</button>
+                    </div>
+                </div>
+                
+                <div class="canvas-container">
+                    <canvas id="bgCanvas" class="writing-canvas"></canvas>
+                    <canvas id="guideCanvas" class="writing-canvas"></canvas>
+                    <canvas id="drawCanvas" class="writing-canvas"></canvas>
+                </div>
+
+                <div class="canvas-actions">
+                    <button class="action-btn secondary" id="skipBtn">Skip</button>
+                    <button class="action-btn primary" id="markDoneBtn">✓ Mark as Done</button>
+                </div>
+
+                <div class="stroke-control">
+                    <label>Stroke Width:</label>
+                    <input type="range" class="stroke-slider" id="strokeSlider" min="2" max="20" value="8">
+                    <span id="strokeValue">8px</span>
+                </div>
+
+                <div class="guide-toggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="showGuide" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-label">Show guide character</span>
+                </div>
+            </div>
+
+            <!-- Progress Panel -->
+            <div class="progress-panel fade-in" style="animation-delay: 0.2s;">
+                <div class="progress-title">Progress Grid</div>
+                <div class="char-grid" id="charGrid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Language data with consonants
+        const languageData = {
+            burmese: {
+                name: 'Burmese',
+                native: 'မြန်မာ',
+                fontClass: 'burmese',
+                consonants: [
+                    { char: 'က', roman: 'ka', devanagari: 'क' },
+                    { char: 'ခ', roman: 'kha', devanagari: 'ख' },
+                    { char: 'ဂ', roman: 'ga', devanagari: 'ग' },
+                    { char: 'ဃ', roman: 'gha', devanagari: 'घ' },
+                    { char: 'င', roman: 'nga', devanagari: 'ङ' },
+                    { char: 'စ', roman: 'ca', devanagari: 'च' },
+                    { char: 'ဆ', roman: 'cha', devanagari: 'छ' },
+                    { char: 'ဇ', roman: 'ja', devanagari: 'ज' },
+                    { char: 'ဈ', roman: 'jha', devanagari: 'झ' },
+                    { char: 'ည', roman: 'nya', devanagari: 'ञ' },
+                    { char: 'ဋ', roman: 'ṭa', devanagari: 'ट' },
+                    { char: 'ဌ', roman: 'ṭha', devanagari: 'ठ' },
+                    { char: 'ဍ', roman: 'ḍa', devanagari: 'ड' },
+                    { char: 'ဎ', roman: 'ḍha', devanagari: 'ढ' },
+                    { char: 'ဏ', roman: 'ṇa', devanagari: 'ण' },
+                    { char: 'တ', roman: 'ta', devanagari: 'त' },
+                    { char: 'ထ', roman: 'tha', devanagari: 'थ' },
+                    { char: 'ဒ', roman: 'da', devanagari: 'द' },
+                    { char: 'ဓ', roman: 'dha', devanagari: 'ध' },
+                    { char: 'န', roman: 'na', devanagari: 'न' },
+                    { char: 'ပ', roman: 'pa', devanagari: 'प' },
+                    { char: 'ဖ', roman: 'pha', devanagari: 'फ' },
+                    { char: 'ဗ', roman: 'ba', devanagari: 'ब' },
+                    { char: 'ဘ', roman: 'bha', devanagari: 'भ' },
+                    { char: 'မ', roman: 'ma', devanagari: 'म' },
+                    { char: 'ယ', roman: 'ya', devanagari: 'य' },
+                    { char: 'ရ', roman: 'ra', devanagari: 'र' },
+                    { char: 'လ', roman: 'la', devanagari: 'ल' },
+                    { char: 'ဝ', roman: 'wa', devanagari: 'व' },
+                    { char: 'သ', roman: 'sa', devanagari: 'श' },
+                    { char: 'ဟ', roman: 'ha', devanagari: 'ह' },
+                    { char: 'ဠ', roman: 'ḷa', devanagari: 'ळ' },
+                    { char: 'အ', roman: 'a', devanagari: 'अ' }
+                ]
+            },
+            japanese_hiragana: {
+                name: 'Hiragana',
+                native: 'ひらがな',
+                fontClass: 'japanese',
+                consonants: [
+                    { char: 'あ', roman: 'a' }, { char: 'い', roman: 'i' }, { char: 'う', roman: 'u' }, { char: 'え', roman: 'e' }, { char: 'お', roman: 'o' },
+                    { char: 'か', roman: 'ka' }, { char: 'き', roman: 'ki' }, { char: 'く', roman: 'ku' }, { char: 'け', roman: 'ke' }, { char: 'こ', roman: 'ko' },
+                    { char: 'さ', roman: 'sa' }, { char: 'し', roman: 'shi' }, { char: 'す', roman: 'su' }, { char: 'せ', roman: 'se' }, { char: 'そ', roman: 'so' },
+                    { char: 'た', roman: 'ta' }, { char: 'ち', roman: 'chi' }, { char: 'つ', roman: 'tsu' }, { char: 'て', roman: 'te' }, { char: 'と', roman: 'to' },
+                    { char: 'な', roman: 'na' }, { char: 'に', roman: 'ni' }, { char: 'ぬ', roman: 'nu' }, { char: 'ね', roman: 'ne' }, { char: 'の', roman: 'no' },
+                    { char: 'は', roman: 'ha' }, { char: 'ひ', roman: 'hi' }, { char: 'ふ', roman: 'fu' }, { char: 'へ', roman: 'he' }, { char: 'ほ', roman: 'ho' },
+                    { char: 'ま', roman: 'ma' }, { char: 'み', roman: 'mi' }, { char: 'む', roman: 'mu' }, { char: 'め', roman: 'me' }, { char: 'も', roman: 'mo' },
+                    { char: 'や', roman: 'ya' }, { char: 'ゆ', roman: 'yu' }, { char: 'よ', roman: 'yo' },
+                    { char: 'ら', roman: 'ra' }, { char: 'り', roman: 'ri' }, { char: 'る', roman: 'ru' }, { char: 'れ', roman: 're' }, { char: 'ろ', roman: 'ro' },
+                    { char: 'わ', roman: 'wa' }, { char: 'を', roman: 'wo' }, { char: 'ん', roman: 'n' }
+                ]
+            },
+            japanese_katakana: {
+                name: 'Katakana',
+                native: 'カタカナ',
+                fontClass: 'japanese',
+                consonants: [
+                    { char: 'ア', roman: 'a' }, { char: 'イ', roman: 'i' }, { char: 'ウ', roman: 'u' }, { char: 'エ', roman: 'e' }, { char: 'オ', roman: 'o' },
+                    { char: 'カ', roman: 'ka' }, { char: 'キ', roman: 'ki' }, { char: 'ク', roman: 'ku' }, { char: 'ケ', roman: 'ke' }, { char: 'コ', roman: 'ko' },
+                    { char: 'サ', roman: 'sa' }, { char: 'シ', roman: 'shi' }, { char: 'ス', roman: 'su' }, { char: 'セ', roman: 'se' }, { char: 'ソ', roman: 'so' },
+                    { char: 'タ', roman: 'ta' }, { char: 'チ', roman: 'chi' }, { char: 'ツ', roman: 'tsu' }, { char: 'テ', roman: 'te' }, { char: 'ト', roman: 'to' },
+                    { char: 'ナ', roman: 'na' }, { char: 'ニ', roman: 'ni' }, { char: 'ヌ', roman: 'nu' }, { char: 'ネ', roman: 'ne' }, { char: 'ノ', roman: 'no' },
+                    { char: 'ハ', roman: 'ha' }, { char: 'ヒ', roman: 'hi' }, { char: 'フ', roman: 'fu' }, { char: 'ヘ', roman: 'he' }, { char: 'ホ', roman: 'ho' },
+                    { char: 'マ', roman: 'ma' }, { char: 'ミ', roman: 'mi' }, { char: 'ム', roman: 'mu' }, { char: 'メ', roman: 'me' }, { char: 'モ', roman: 'mo' },
+                    { char: 'ヤ', roman: 'ya' }, { char: 'ユ', roman: 'yu' }, { char: 'ヨ', roman: 'yo' },
+                    { char: 'ラ', roman: 'ra' }, { char: 'リ', roman: 'ri' }, { char: 'ル', roman: 'ru' }, { char: 'レ', roman: 're' }, { char: 'ロ', roman: 'ro' },
+                    { char: 'ワ', roman: 'wa' }, { char: 'ヲ', roman: 'wo' }, { char: 'ン', roman: 'n' }
+                ]
+            },
+            korean: {
+                name: 'Korean',
+                native: '한글',
+                fontClass: 'korean',
+                consonants: [
+                    { char: 'ㄱ', roman: 'g/k' }, { char: 'ㄴ', roman: 'n' }, { char: 'ㄷ', roman: 'd/t' }, { char: 'ㄹ', roman: 'r/l' },
+                    { char: 'ㅁ', roman: 'm' }, { char: 'ㅂ', roman: 'b/p' }, { char: 'ㅅ', roman: 's' }, { char: 'ㅇ', roman: 'ng' },
+                    { char: 'ㅈ', roman: 'j' }, { char: 'ㅊ', roman: 'ch' }, { char: 'ㅋ', roman: 'k' }, { char: 'ㅌ', roman: 't' },
+                    { char: 'ㅍ', roman: 'p' }, { char: 'ㅎ', roman: 'h' },
+                    { char: 'ㄲ', roman: 'kk' }, { char: 'ㄸ', roman: 'tt' }, { char: 'ㅃ', roman: 'pp' }, { char: 'ㅆ', roman: 'ss' }, { char: 'ㅉ', roman: 'jj' }
+                ]
+            },
+            chinese: {
+                name: 'Chinese',
+                native: '汉字',
+                fontClass: 'chinese',
+                consonants: [
+                    { char: '一', roman: 'yī (one)' }, { char: '二', roman: 'èr (two)' }, { char: '三', roman: 'sān (three)' },
+                    { char: '四', roman: 'sì (four)' }, { char: '五', roman: 'wǔ (five)' }, { char: '六', roman: 'liù (six)' },
+                    { char: '七', roman: 'qī (seven)' }, { char: '八', roman: 'bā (eight)' }, { char: '九', roman: 'jiǔ (nine)' },
+                    { char: '十', roman: 'shí (ten)' }, { char: '大', roman: 'dà (big)' }, { char: '小', roman: 'xiǎo (small)' },
+                    { char: '人', roman: 'rén (person)' }, { char: '口', roman: 'kǒu (mouth)' }, { char: '日', roman: 'rì (sun)' },
+                    { char: '月', roman: 'yuè (moon)' }, { char: '山', roman: 'shān (mountain)' }, { char: '水', roman: 'shuǐ (water)' },
+                    { char: '火', roman: 'huǒ (fire)' }, { char: '木', roman: 'mù (wood)' }, { char: '金', roman: 'jīn (gold)' },
+                    { char: '土', roman: 'tǔ (earth)' }, { char: '天', roman: 'tiān (sky)' }, { char: '中', roman: 'zhōng (middle)' }
+                ]
+            },
+            telugu: {
+                name: 'Telugu',
+                native: 'తెలుగు',
+                fontClass: 'telugu',
+                consonants: [
+                    { char: 'క', roman: 'ka' }, { char: 'ఖ', roman: 'kha' }, { char: 'గ', roman: 'ga' }, { char: 'ఘ', roman: 'gha' }, { char: 'ఙ', roman: 'ṅa' },
+                    { char: 'చ', roman: 'ca' }, { char: 'ఛ', roman: 'cha' }, { char: 'జ', roman: 'ja' }, { char: 'ఝ', roman: 'jha' }, { char: 'ఞ', roman: 'ña' },
+                    { char: 'ట', roman: 'ṭa' }, { char: 'ఠ', roman: 'ṭha' }, { char: 'డ', roman: 'ḍa' }, { char: 'ఢ', roman: 'ḍha' }, { char: 'ణ', roman: 'ṇa' },
+                    { char: 'త', roman: 'ta' }, { char: 'థ', roman: 'tha' }, { char: 'ద', roman: 'da' }, { char: 'ధ', roman: 'dha' }, { char: 'న', roman: 'na' },
+                    { char: 'ప', roman: 'pa' }, { char: 'ఫ', roman: 'pha' }, { char: 'బ', roman: 'ba' }, { char: 'భ', roman: 'bha' }, { char: 'మ', roman: 'ma' },
+                    { char: 'య', roman: 'ya' }, { char: 'ర', roman: 'ra' }, { char: 'ల', roman: 'la' }, { char: 'వ', roman: 'va' }, { char: 'శ', roman: 'śa' },
+                    { char: 'ష', roman: 'ṣa' }, { char: 'స', roman: 'sa' }, { char: 'హ', roman: 'ha' }, { char: 'ళ', roman: 'ḷa' }, { char: 'క్ష', roman: 'kṣa' }
+                ]
+            },
+            hindi: {
+                name: 'Hindi',
+                native: 'हिन्दी',
+                fontClass: 'devanagari',
+                consonants: [
+                    { char: 'क', roman: 'ka' }, { char: 'ख', roman: 'kha' }, { char: 'ग', roman: 'ga' }, { char: 'घ', roman: 'gha' }, { char: 'ङ', roman: 'ṅa' },
+                    { char: 'च', roman: 'ca' }, { char: 'छ', roman: 'cha' }, { char: 'ज', roman: 'ja' }, { char: 'झ', roman: 'jha' }, { char: 'ञ', roman: 'ña' },
+                    { char: 'ट', roman: 'ṭa' }, { char: 'ठ', roman: 'ṭha' }, { char: 'ड', roman: 'ḍa' }, { char: 'ढ', roman: 'ḍha' }, { char: 'ण', roman: 'ṇa' },
+                    { char: 'त', roman: 'ta' }, { char: 'थ', roman: 'tha' }, { char: 'द', roman: 'da' }, { char: 'ध', roman: 'dha' }, { char: 'न', roman: 'na' },
+                    { char: 'प', roman: 'pa' }, { char: 'फ', roman: 'pha' }, { char: 'ब', roman: 'ba' }, { char: 'भ', roman: 'bha' }, { char: 'म', roman: 'ma' },
+                    { char: 'य', roman: 'ya' }, { char: 'र', roman: 'ra' }, { char: 'ल', roman: 'la' }, { char: 'व', roman: 'va' }, { char: 'श', roman: 'śa' },
+                    { char: 'ष', roman: 'ṣa' }, { char: 'स', roman: 'sa' }, { char: 'ह', roman: 'ha' }
+                ]
+            }
+        };
+
+        // App State
+        let currentLang = 'burmese';
+        let currentIndex = 0;
+        let practicedChars = {};
+        let practiceMode = 'sequential';
+        let strokeWidth = 8;
+        let showGuide = true;
+        let strokes = [];
+        let currentStroke = [];
+        let isDrawing = false;
+
+        // Canvas elements
+        const bgCanvas = document.getElementById('bgCanvas');
+        const guideCanvas = document.getElementById('guideCanvas');
+        const drawCanvas = document.getElementById('drawCanvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        const guideCtx = guideCanvas.getContext('2d');
+        const drawCtx = drawCanvas.getContext('2d');
+
+        // Initialize
+        function init() {
+            loadProgress();
+            renderLanguageTabs();
+            setupCanvas();
+            setupEventListeners();
+            updateDisplay();
+        }
+
+        // Load/Save Progress
+        function loadProgress() {
+            const saved = localStorage.getItem('consonantsPractice');
+            if (saved) {
+                const data = JSON.parse(saved);
+                practicedChars = data.practicedChars || {};
+                currentLang = data.currentLang || 'burmese';
+                currentIndex = data.currentIndex || 0;
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('consonantsPractice', JSON.stringify({
+                practicedChars,
+                currentLang,
+                currentIndex
+            }));
+        }
+
+        // Render language tabs
+        function renderLanguageTabs() {
+            const container = document.getElementById('languageTabs');
+            container.innerHTML = '';
+            
+            Object.keys(languageData).forEach(key => {
+                const lang = languageData[key];
+                const tab = document.createElement('button');
+                tab.className = `lang-tab ${key === currentLang ? 'active' : ''}`;
+                tab.innerHTML = `${lang.name} <span class="native ${lang.fontClass}">${lang.native}</span>`;
+                tab.onclick = () => switchLanguage(key);
+                container.appendChild(tab);
+            });
+        }
+
+        // Switch language
+        function switchLanguage(langKey) {
+            currentLang = langKey;
+            currentIndex = 0;
+            renderLanguageTabs();
+            updateDisplay();
+            clearCanvas();
+            saveProgress();
+        }
+
+        // Setup canvas
+        function setupCanvas() {
+            const container = document.querySelector('.canvas-container');
+            const rect = container.getBoundingClientRect();
+            const size = Math.min(rect.width, rect.height) || 400;
+            
+            [bgCanvas, guideCanvas, drawCanvas].forEach(canvas => {
+                canvas.width = size;
+                canvas.height = size;
+            });
+
+            drawBackground();
+        }
+
+        // Draw background grid
+        function drawBackground() {
+            const size = bgCanvas.width;
+            bgCtx.fillStyle = '#fefefe';
+            bgCtx.fillRect(0, 0, size, size);
+            
+            // Draw grid lines
+            bgCtx.strokeStyle = '#e0e0e0';
+            bgCtx.lineWidth = 1;
+            
+            // Cross lines
+            bgCtx.beginPath();
+            bgCtx.moveTo(size / 2, 0);
+            bgCtx.lineTo(size / 2, size);
+            bgCtx.moveTo(0, size / 2);
+            bgCtx.lineTo(size, size / 2);
+            bgCtx.stroke();
+            
+            // Diagonal lines
+            bgCtx.strokeStyle = '#f0f0f0';
+            bgCtx.setLineDash([5, 5]);
+            bgCtx.beginPath();
+            bgCtx.moveTo(0, 0);
+            bgCtx.lineTo(size, size);
+            bgCtx.moveTo(size, 0);
+            bgCtx.lineTo(0, size);
+            bgCtx.stroke();
+            bgCtx.setLineDash([]);
+        }
+
+        // Draw guide character
+        function drawGuide() {
+            const lang = languageData[currentLang];
+            const char = lang.consonants[currentIndex].char;
+            const size = guideCanvas.width;
+            
+            guideCtx.clearRect(0, 0, size, size);
+            
+            if (showGuide) {
+                guideCtx.font = `${size * 0.6}px ${lang.fontClass === 'burmese' ? 'Noto Sans Myanmar' : 
+                    lang.fontClass === 'japanese' ? 'Noto Sans JP' :
+                    lang.fontClass === 'korean' ? 'Noto Sans KR' :
+                    lang.fontClass === 'chinese' ? 'Noto Sans SC' :
+                    lang.fontClass === 'telugu' ? 'Noto Sans Telugu' :
+                    'Noto Sans Devanagari'}`;
+                guideCtx.fillStyle = 'rgba(200, 200, 200, 0.3)';
+                guideCtx.textAlign = 'center';
+                guideCtx.textBaseline = 'middle';
+                guideCtx.fillText(char, size / 2, size / 2);
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Canvas drawing
+            drawCanvas.addEventListener('mousedown', startDrawing);
+            drawCanvas.addEventListener('mousemove', draw);
+            drawCanvas.addEventListener('mouseup', stopDrawing);
+            drawCanvas.addEventListener('mouseleave', stopDrawing);
+            
+            // Touch support
+            drawCanvas.addEventListener('touchstart', handleTouch);
+            drawCanvas.addEventListener('touchmove', handleTouch);
+            drawCanvas.addEventListener('touchend', stopDrawing);
+
+            // Navigation
+            document.getElementById('prevBtn').onclick = () => navigate(-1);
+            document.getElementById('nextBtn').onclick = () => navigate(1);
+            document.getElementById('randomBtn').onclick = goRandom;
+            
+            // Actions
+            document.getElementById('clearBtn').onclick = clearCanvas;
+            document.getElementById('undoBtn').onclick = undoStroke;
+            document.getElementById('markDoneBtn').onclick = markAsDone;
+            document.getElementById('skipBtn').onclick = () => navigate(1);
+            
+            // Stroke width
+            document.getElementById('strokeSlider').oninput = (e) => {
+                strokeWidth = parseInt(e.target.value);
+                document.getElementById('strokeValue').textContent = strokeWidth + 'px';
+            };
+            
+            // Guide toggle
+            document.getElementById('showGuide').onchange = (e) => {
+                showGuide = e.target.checked;
+                drawGuide();
+            };
+            
+            // Mode toggle
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    practiceMode = btn.dataset.mode;
+                };
+            });
+
+            // Window resize
+            window.addEventListener('resize', () => {
+                setupCanvas();
+                drawGuide();
+                redrawStrokes();
+            });
+        }
+
+        // Drawing functions
+        function getPos(e) {
+            const rect = drawCanvas.getBoundingClientRect();
+            const scaleX = drawCanvas.width / rect.width;
+            const scaleY = drawCanvas.height / rect.height;
+            return {
+                x: (e.clientX - rect.left) * scaleX,
+                y: (e.clientY - rect.top) * scaleY
+            };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getPos(e);
+            currentStroke = [pos];
+            drawCtx.beginPath();
+            drawCtx.moveTo(pos.x, pos.y);
+            drawCtx.strokeStyle = '#1a1a25';
+            drawCtx.lineWidth = strokeWidth;
+            drawCtx.lineCap = 'round';
+            drawCtx.lineJoin = 'round';
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+            currentStroke.push(pos);
+            drawCtx.lineTo(pos.x, pos.y);
+            drawCtx.stroke();
+            drawCtx.beginPath();
+            drawCtx.moveTo(pos.x, pos.y);
+        }
+
+        function stopDrawing() {
+            if (isDrawing && currentStroke.length > 0) {
+                strokes.push({ points: currentStroke, width: strokeWidth });
+            }
+            isDrawing = false;
+            currentStroke = [];
+        }
+
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            };
+            
+            if (e.type === 'touchstart') startDrawing(mouseEvent);
+            else if (e.type === 'touchmove') draw(mouseEvent);
+        }
+
+        function clearCanvas() {
+            strokes = [];
+            drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+        }
+
+        function undoStroke() {
+            if (strokes.length > 0) {
+                strokes.pop();
+                redrawStrokes();
+            }
+        }
+
+        function redrawStrokes() {
+            drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+            strokes.forEach(stroke => {
+                if (stroke.points.length > 0) {
+                    drawCtx.beginPath();
+                    drawCtx.strokeStyle = '#1a1a25';
+                    drawCtx.lineWidth = stroke.width;
+                    drawCtx.lineCap = 'round';
+                    drawCtx.lineJoin = 'round';
+                    drawCtx.moveTo(stroke.points[0].x, stroke.points[0].y);
+                    stroke.points.forEach(p => drawCtx.lineTo(p.x, p.y));
+                    drawCtx.stroke();
+                }
+            });
+        }
+
+        // Navigation
+        function navigate(delta) {
+            const lang = languageData[currentLang];
+            const total = lang.consonants.length;
+            
+            if (practiceMode === 'unpracticed') {
+                const unpracticedIndices = [];
+                for (let i = 0; i < total; i++) {
+                    if (!isPracticed(i)) unpracticedIndices.push(i);
+                }
+                if (unpracticedIndices.length === 0) {
+                    currentIndex = (currentIndex + delta + total) % total;
+                } else {
+                    const currentUnpracticedIdx = unpracticedIndices.indexOf(currentIndex);
+                    if (currentUnpracticedIdx === -1) {
+                        currentIndex = unpracticedIndices[0];
+                    } else {
+                        const newIdx = (currentUnpracticedIdx + delta + unpracticedIndices.length) % unpracticedIndices.length;
+                        currentIndex = unpracticedIndices[newIdx];
+                    }
+                }
+            } else {
+                currentIndex = (currentIndex + delta + total) % total;
+            }
+            
+            clearCanvas();
+            updateDisplay();
+            saveProgress();
+        }
+
+        function goRandom() {
+            const lang = languageData[currentLang];
+            const total = lang.consonants.length;
+            
+            if (practiceMode === 'unpracticed') {
+                const unpracticedIndices = [];
+                for (let i = 0; i < total; i++) {
+                    if (!isPracticed(i)) unpracticedIndices.push(i);
+                }
+                if (unpracticedIndices.length > 0) {
+                    currentIndex = unpracticedIndices[Math.floor(Math.random() * unpracticedIndices.length)];
+                }
+            } else {
+                currentIndex = Math.floor(Math.random() * total);
+            }
+            
+            clearCanvas();
+            updateDisplay();
+            saveProgress();
+        }
+
+        // Check if character is practiced
+        function isPracticed(index) {
+            const key = `${currentLang}_${index}`;
+            return practicedChars[key] === true;
+        }
+
+        // Mark as done
+        function markAsDone() {
+            const key = `${currentLang}_${currentIndex}`;
+            practicedChars[key] = true;
+            updateDisplay();
+            saveProgress();
+            
+            // Auto-advance after brief delay
+            setTimeout(() => {
+                navigate(1);
+            }, 300);
+        }
+
+        // Jump to character
+        function jumpToChar(index) {
+            currentIndex = index;
+            clearCanvas();
+            updateDisplay();
+            saveProgress();
+        }
+
+        // Update display
+        function updateDisplay() {
+            const lang = languageData[currentLang];
+            const charData = lang.consonants[currentIndex];
+            
+            // Update target character
+            const targetEl = document.getElementById('targetChar');
+            targetEl.textContent = charData.char;
+            targetEl.className = `target-char ${lang.fontClass}`;
+            
+            // Update info
+            document.getElementById('romanization').textContent = charData.roman;
+            document.getElementById('charDescription').textContent = 
+                `${charData.devanagari ? charData.devanagari + ' • ' : ''}Character ${currentIndex + 1} of ${lang.consonants.length}`;
+            
+            // Draw guide
+            drawGuide();
+            
+            // Update stats
+            let practicedCount = 0;
+            for (let i = 0; i < lang.consonants.length; i++) {
+                if (isPracticed(i)) practicedCount++;
+            }
+            
+            document.getElementById('practicedCount').textContent = practicedCount;
+            document.getElementById('totalCount').textContent = lang.consonants.length;
+            document.getElementById('progressPercent').textContent = 
+                Math.round((practicedCount / lang.consonants.length) * 100) + '%';
+            
+            // Update grid
+            renderCharGrid();
+        }
+
+        // Render character grid
+        function renderCharGrid() {
+            const container = document.getElementById('charGrid');
+            const lang = languageData[currentLang];
+            
+            container.innerHTML = '';
+            
+            lang.consonants.forEach((charData, index) => {
+                const cell = document.createElement('div');
+                cell.className = `char-cell ${lang.fontClass} `;
+                
+                if (index === currentIndex) {
+                    cell.classList.add('current');
+                } else if (isPracticed(index)) {
+                    cell.classList.add('practiced');
+                } else {
+                    cell.classList.add('unpracticed');
+                }
+                
+                cell.textContent = charData.char;
+                cell.onclick = () => jumpToChar(index);
+                container.appendChild(cell);
+            });
+        }
+
+        // Initialize app
+        init();
+    </script>
+</body>
+</html>

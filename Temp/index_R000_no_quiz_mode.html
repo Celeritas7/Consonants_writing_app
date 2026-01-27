@@ -178,192 +178,6 @@
             color: white;
         }
 
-        /* Main Tab Toggle */
-        .main-tabs {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .main-tab {
-            padding: 0.8rem 2rem;
-            background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Outfit', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .main-tab:hover {
-            border-color: var(--accent-blue);
-            color: var(--text-primary);
-        }
-
-        .main-tab.active {
-            background: linear-gradient(135deg, var(--accent-blue), #2563eb);
-            border-color: transparent;
-            color: white;
-        }
-
-        /* Quiz Mode Styles */
-        .quiz-prompt {
-            font-size: 4rem;
-            line-height: 1.2;
-            margin: 1rem 0;
-            color: var(--accent-orange);
-        }
-
-        .quiz-hint {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .answer-reveal {
-            display: none;
-            margin-top: 1rem;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .answer-reveal.visible {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .answer-char {
-            font-size: 5rem;
-            line-height: 1;
-            margin: 0.5rem 0;
-        }
-
-        .answer-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .result-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1rem;
-        }
-
-        .result-btn {
-            padding: 0.75rem 2rem;
-            border-radius: 10px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .result-btn.correct {
-            background: linear-gradient(135deg, var(--accent-green), #16a34a);
-            color: white;
-        }
-
-        .result-btn.correct:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
-        }
-
-        .result-btn.incorrect {
-            background: linear-gradient(135deg, var(--accent-red), #dc2626);
-            color: white;
-        }
-
-        .result-btn.incorrect:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
-        }
-
-        .check-btn {
-            background: linear-gradient(135deg, var(--accent-blue), #2563eb);
-            color: white;
-        }
-
-        .check-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-        }
-
-        /* Quiz Stats */
-        .quiz-stats {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .quiz-stat {
-            padding: 0.5rem 1rem;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            font-size: 0.9rem;
-        }
-
-        .quiz-stat .value {
-            font-weight: 700;
-            margin-right: 0.3rem;
-        }
-
-        .quiz-stat.correct-stat .value {
-            color: var(--accent-green);
-        }
-
-        .quiz-stat.incorrect-stat .value {
-            color: var(--accent-red);
-        }
-
-        .quiz-stat.streak-stat .value {
-            color: var(--accent-orange);
-        }
-
-        /* Hide sections based on mode */
-        .practice-view, .quiz-view {
-            display: none;
-        }
-
-        .practice-view.active, .quiz-view.active {
-            display: block;
-        }
-
-        .quiz-grid-cell {
-            position: relative;
-        }
-
-        .quiz-grid-cell.correct-answer::after {
-            content: '✓';
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            font-size: 0.6rem;
-            color: var(--accent-green);
-        }
-
-        .quiz-grid-cell.incorrect-answer::after {
-            content: '✗';
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            font-size: 0.6rem;
-            color: var(--accent-red);
-        }
-
         /* Main Practice Area */
         .practice-area {
             display: grid;
@@ -771,15 +585,6 @@
             </div>
         </div>
 
-        <!-- Main Tabs: Practice vs Quiz -->
-        <div class="main-tabs">
-            <button class="main-tab active" data-view="practice">✏️ Practice Mode</button>
-            <button class="main-tab" data-view="quiz">🧠 Quiz Mode</button>
-        </div>
-
-        <!-- Practice View -->
-        <div class="practice-view active" id="practiceView">
-
         <!-- Mode Toggle -->
         <div class="mode-toggle">
             <button class="mode-btn active" data-mode="sequential">Sequential</button>
@@ -845,94 +650,6 @@
                 <div class="progress-title">Progress Grid</div>
                 <div class="char-grid" id="charGrid">
                     <!-- Populated by JS -->
-                </div>
-            </div>
-        </div>
-        </div><!-- End Practice View -->
-
-        <!-- Quiz View -->
-        <div class="quiz-view" id="quizView">
-            <!-- Quiz Stats -->
-            <div class="quiz-stats">
-                <div class="quiz-stat correct-stat">
-                    <span class="value" id="quizCorrect">0</span>Correct
-                </div>
-                <div class="quiz-stat incorrect-stat">
-                    <span class="value" id="quizIncorrect">0</span>Incorrect
-                </div>
-                <div class="quiz-stat streak-stat">
-                    <span class="value" id="quizStreak">0</span>Streak
-                </div>
-            </div>
-
-            <!-- Quiz Mode Toggle -->
-            <div class="mode-toggle">
-                <button class="mode-btn active" data-quiz-mode="sequential">Sequential</button>
-                <button class="mode-btn" data-quiz-mode="random">Random</button>
-                <button class="mode-btn" data-quiz-mode="mistakes">Review Mistakes</button>
-            </div>
-
-            <!-- Quiz Practice Area -->
-            <div class="practice-area">
-                <!-- Quiz Prompt -->
-                <div class="character-panel fade-in">
-                    <div class="canvas-title">Write this character</div>
-                    <div class="quiz-hint" id="quizRoman">ka</div>
-                    <div class="quiz-prompt devanagari" id="quizDevanagari">क</div>
-                    <div class="char-info">
-                        <div id="quizDescription">Character 1 of 33</div>
-                    </div>
-                    
-                    <!-- Answer Reveal -->
-                    <div class="answer-reveal" id="answerReveal">
-                        <div class="answer-label">Correct Answer:</div>
-                        <div class="answer-char" id="answerChar">က</div>
-                        <div class="result-buttons">
-                            <button class="result-btn incorrect" id="markIncorrect">✗ Wrong</button>
-                            <button class="result-btn correct" id="markCorrect">✓ Correct</button>
-                        </div>
-                    </div>
-
-                    <div class="nav-buttons" id="quizNavButtons">
-                        <button class="nav-btn" id="quizPrevBtn">←</button>
-                        <button class="nav-btn" id="quizRandomBtn">🎲</button>
-                        <button class="nav-btn" id="quizNextBtn">→</button>
-                    </div>
-                </div>
-
-                <!-- Quiz Canvas Area -->
-                <div class="canvas-panel fade-in" style="animation-delay: 0.1s;">
-                    <div class="canvas-header">
-                        <span class="canvas-title">Your Answer</span>
-                        <div class="canvas-tools">
-                            <button class="tool-btn" id="quizUndoBtn">↩ Undo</button>
-                            <button class="tool-btn" id="quizClearBtn">🗑 Clear</button>
-                        </div>
-                    </div>
-                    
-                    <div class="canvas-container">
-                        <canvas id="quizBgCanvas" class="writing-canvas"></canvas>
-                        <canvas id="quizDrawCanvas" class="writing-canvas"></canvas>
-                    </div>
-
-                    <div class="canvas-actions">
-                        <button class="action-btn secondary" id="quizSkipBtn">Skip</button>
-                        <button class="action-btn check-btn" id="checkAnswerBtn">👁 Check Answer</button>
-                    </div>
-
-                    <div class="stroke-control">
-                        <label>Stroke Width:</label>
-                        <input type="range" class="stroke-slider" id="quizStrokeSlider" min="2" max="20" value="8">
-                        <span id="quizStrokeValue">8px</span>
-                    </div>
-                </div>
-
-                <!-- Quiz Progress Panel -->
-                <div class="progress-panel fade-in" style="animation-delay: 0.2s;">
-                    <div class="progress-title">Quiz Progress</div>
-                    <div class="char-grid" id="quizCharGrid">
-                        <!-- Populated by JS -->
-                    </div>
                 </div>
             </div>
         </div>
@@ -1083,20 +800,6 @@
         let currentStroke = [];
         let isDrawing = false;
 
-        // Quiz State
-        let currentView = 'practice';
-        let quizIndex = 0;
-        let quizMode = 'sequential';
-        let quizResults = {}; // { langKey_index: 'correct' | 'incorrect' }
-        let quizCorrectCount = 0;
-        let quizIncorrectCount = 0;
-        let quizStreak = 0;
-        let quizStrokes = [];
-        let quizCurrentStroke = [];
-        let isQuizDrawing = false;
-        let quizStrokeWidth = 8;
-        let answerRevealed = false;
-
         // Canvas elements
         const bgCanvas = document.getElementById('bgCanvas');
         const guideCanvas = document.getElementById('guideCanvas');
@@ -1105,18 +808,13 @@
         const guideCtx = guideCanvas.getContext('2d');
         const drawCtx = drawCanvas.getContext('2d');
 
-        // Quiz Canvas elements
-        let quizBgCanvas, quizDrawCanvas, quizBgCtx, quizDrawCtx;
-
         // Initialize
         function init() {
             loadProgress();
             renderLanguageTabs();
             setupCanvas();
-            setupQuizCanvas();
             setupEventListeners();
             updateDisplay();
-            updateQuizDisplay();
         }
 
         // Load/Save Progress
@@ -1127,9 +825,6 @@
                 practicedChars = data.practicedChars || {};
                 currentLang = data.currentLang || 'burmese';
                 currentIndex = data.currentIndex || 0;
-                quizResults = data.quizResults || {};
-                quizCorrectCount = data.quizCorrectCount || 0;
-                quizIncorrectCount = data.quizIncorrectCount || 0;
             }
         }
 
@@ -1137,10 +832,7 @@
             localStorage.setItem('consonantsPractice', JSON.stringify({
                 practicedChars,
                 currentLang,
-                currentIndex,
-                quizResults,
-                quizCorrectCount,
-                quizIncorrectCount
+                currentIndex
             }));
         }
 
@@ -1163,14 +855,9 @@
         function switchLanguage(langKey) {
             currentLang = langKey;
             currentIndex = 0;
-            quizIndex = 0;
-            answerRevealed = false;
             renderLanguageTabs();
             updateDisplay();
-            updateQuizDisplay();
             clearCanvas();
-            clearQuizCanvas();
-            hideAnswerReveal();
             saveProgress();
         }
 
@@ -1186,62 +873,6 @@
             });
 
             drawBackground();
-        }
-
-        // Setup quiz canvas
-        function setupQuizCanvas() {
-            quizBgCanvas = document.getElementById('quizBgCanvas');
-            quizDrawCanvas = document.getElementById('quizDrawCanvas');
-            
-            if (!quizBgCanvas || !quizDrawCanvas) return;
-            
-            quizBgCtx = quizBgCanvas.getContext('2d');
-            quizDrawCtx = quizDrawCanvas.getContext('2d');
-            
-            const containers = document.querySelectorAll('.canvas-container');
-            if (containers.length < 2) return;
-            
-            const container = containers[1];
-            const rect = container.getBoundingClientRect();
-            const size = Math.min(rect.width, rect.height) || 400;
-            
-            [quizBgCanvas, quizDrawCanvas].forEach(canvas => {
-                canvas.width = size;
-                canvas.height = size;
-            });
-
-            drawQuizBackground();
-        }
-
-        // Draw quiz background grid
-        function drawQuizBackground() {
-            if (!quizBgCtx) return;
-            const size = quizBgCanvas.width;
-            quizBgCtx.fillStyle = '#fefefe';
-            quizBgCtx.fillRect(0, 0, size, size);
-            
-            // Draw grid lines
-            quizBgCtx.strokeStyle = '#e0e0e0';
-            quizBgCtx.lineWidth = 1;
-            
-            // Cross lines
-            quizBgCtx.beginPath();
-            quizBgCtx.moveTo(size / 2, 0);
-            quizBgCtx.lineTo(size / 2, size);
-            quizBgCtx.moveTo(0, size / 2);
-            quizBgCtx.lineTo(size, size / 2);
-            quizBgCtx.stroke();
-            
-            // Diagonal lines
-            quizBgCtx.strokeStyle = '#f0f0f0';
-            quizBgCtx.setLineDash([5, 5]);
-            quizBgCtx.beginPath();
-            quizBgCtx.moveTo(0, 0);
-            quizBgCtx.lineTo(size, size);
-            quizBgCtx.moveTo(size, 0);
-            quizBgCtx.lineTo(0, size);
-            quizBgCtx.stroke();
-            quizBgCtx.setLineDash([]);
         }
 
         // Draw background grid
@@ -1333,89 +964,20 @@
             };
             
             // Mode toggle
-            document.querySelectorAll('.mode-btn[data-mode]').forEach(btn => {
+            document.querySelectorAll('.mode-btn').forEach(btn => {
                 btn.onclick = () => {
-                    document.querySelectorAll('.mode-btn[data-mode]').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     practiceMode = btn.dataset.mode;
                 };
             });
-
-            // Main view tabs (Practice vs Quiz)
-            document.querySelectorAll('.main-tab').forEach(tab => {
-                tab.onclick = () => {
-                    document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    currentView = tab.dataset.view;
-                    
-                    document.getElementById('practiceView').classList.toggle('active', currentView === 'practice');
-                    document.getElementById('quizView').classList.toggle('active', currentView === 'quiz');
-                    
-                    if (currentView === 'quiz') {
-                        setTimeout(() => {
-                            setupQuizCanvas();
-                            updateQuizDisplay();
-                        }, 100);
-                    }
-                };
-            });
-
-            // Quiz mode toggle
-            document.querySelectorAll('.mode-btn[data-quiz-mode]').forEach(btn => {
-                btn.onclick = () => {
-                    document.querySelectorAll('.mode-btn[data-quiz-mode]').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    quizMode = btn.dataset.quizMode;
-                };
-            });
-
-            // Quiz canvas events
-            setupQuizCanvasEvents();
-
-            // Quiz navigation
-            document.getElementById('quizPrevBtn').onclick = () => quizNavigate(-1);
-            document.getElementById('quizNextBtn').onclick = () => quizNavigate(1);
-            document.getElementById('quizRandomBtn').onclick = quizGoRandom;
-            
-            // Quiz actions
-            document.getElementById('quizClearBtn').onclick = clearQuizCanvas;
-            document.getElementById('quizUndoBtn').onclick = undoQuizStroke;
-            document.getElementById('quizSkipBtn').onclick = () => quizNavigate(1);
-            document.getElementById('checkAnswerBtn').onclick = revealAnswer;
-            document.getElementById('markCorrect').onclick = () => markQuizResult(true);
-            document.getElementById('markIncorrect').onclick = () => markQuizResult(false);
-            
-            // Quiz stroke width
-            document.getElementById('quizStrokeSlider').oninput = (e) => {
-                quizStrokeWidth = parseInt(e.target.value);
-                document.getElementById('quizStrokeValue').textContent = quizStrokeWidth + 'px';
-            };
 
             // Window resize
             window.addEventListener('resize', () => {
                 setupCanvas();
                 drawGuide();
                 redrawStrokes();
-                if (currentView === 'quiz') {
-                    setupQuizCanvas();
-                    redrawQuizStrokes();
-                }
             });
-        }
-
-        // Setup quiz canvas events
-        function setupQuizCanvasEvents() {
-            const quizDrawCanvas = document.getElementById('quizDrawCanvas');
-            if (!quizDrawCanvas) return;
-            
-            quizDrawCanvas.addEventListener('mousedown', startQuizDrawing);
-            quizDrawCanvas.addEventListener('mousemove', quizDraw);
-            quizDrawCanvas.addEventListener('mouseup', stopQuizDrawing);
-            quizDrawCanvas.addEventListener('mouseleave', stopQuizDrawing);
-            
-            quizDrawCanvas.addEventListener('touchstart', handleQuizTouch);
-            quizDrawCanvas.addEventListener('touchmove', handleQuizTouch);
-            quizDrawCanvas.addEventListener('touchend', stopQuizDrawing);
         }
 
         // Drawing functions
@@ -1631,267 +1193,6 @@
                 
                 cell.textContent = charData.char;
                 cell.onclick = () => jumpToChar(index);
-                container.appendChild(cell);
-            });
-        }
-
-        // ========== QUIZ MODE FUNCTIONS ==========
-
-        // Quiz drawing functions
-        function getQuizPos(e) {
-            const canvas = document.getElementById('quizDrawCanvas');
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            return {
-                x: (e.clientX - rect.left) * scaleX,
-                y: (e.clientY - rect.top) * scaleY
-            };
-        }
-
-        function startQuizDrawing(e) {
-            isQuizDrawing = true;
-            const pos = getQuizPos(e);
-            quizCurrentStroke = [pos];
-            quizDrawCtx.beginPath();
-            quizDrawCtx.moveTo(pos.x, pos.y);
-            quizDrawCtx.strokeStyle = '#1a1a25';
-            quizDrawCtx.lineWidth = quizStrokeWidth;
-            quizDrawCtx.lineCap = 'round';
-            quizDrawCtx.lineJoin = 'round';
-        }
-
-        function quizDraw(e) {
-            if (!isQuizDrawing) return;
-            const pos = getQuizPos(e);
-            quizCurrentStroke.push(pos);
-            quizDrawCtx.lineTo(pos.x, pos.y);
-            quizDrawCtx.stroke();
-            quizDrawCtx.beginPath();
-            quizDrawCtx.moveTo(pos.x, pos.y);
-        }
-
-        function stopQuizDrawing() {
-            if (isQuizDrawing && quizCurrentStroke.length > 0) {
-                quizStrokes.push({ points: quizCurrentStroke, width: quizStrokeWidth });
-            }
-            isQuizDrawing = false;
-            quizCurrentStroke = [];
-        }
-
-        function handleQuizTouch(e) {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const mouseEvent = {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            };
-            
-            if (e.type === 'touchstart') startQuizDrawing(mouseEvent);
-            else if (e.type === 'touchmove') quizDraw(mouseEvent);
-        }
-
-        function clearQuizCanvas() {
-            quizStrokes = [];
-            if (quizDrawCtx) {
-                quizDrawCtx.clearRect(0, 0, quizDrawCanvas.width, quizDrawCanvas.height);
-            }
-        }
-
-        function undoQuizStroke() {
-            if (quizStrokes.length > 0) {
-                quizStrokes.pop();
-                redrawQuizStrokes();
-            }
-        }
-
-        function redrawQuizStrokes() {
-            if (!quizDrawCtx) return;
-            quizDrawCtx.clearRect(0, 0, quizDrawCanvas.width, quizDrawCanvas.height);
-            quizStrokes.forEach(stroke => {
-                if (stroke.points.length > 0) {
-                    quizDrawCtx.beginPath();
-                    quizDrawCtx.strokeStyle = '#1a1a25';
-                    quizDrawCtx.lineWidth = stroke.width;
-                    quizDrawCtx.lineCap = 'round';
-                    quizDrawCtx.lineJoin = 'round';
-                    quizDrawCtx.moveTo(stroke.points[0].x, stroke.points[0].y);
-                    stroke.points.forEach(p => quizDrawCtx.lineTo(p.x, p.y));
-                    quizDrawCtx.stroke();
-                }
-            });
-        }
-
-        // Quiz navigation
-        function quizNavigate(delta) {
-            const lang = languageData[currentLang];
-            const total = lang.consonants.length;
-            
-            if (quizMode === 'mistakes') {
-                const mistakeIndices = [];
-                for (let i = 0; i < total; i++) {
-                    const key = `${currentLang}_${i}`;
-                    if (quizResults[key] === 'incorrect') mistakeIndices.push(i);
-                }
-                if (mistakeIndices.length === 0) {
-                    quizIndex = (quizIndex + delta + total) % total;
-                } else {
-                    const currentMistakeIdx = mistakeIndices.indexOf(quizIndex);
-                    if (currentMistakeIdx === -1) {
-                        quizIndex = mistakeIndices[0];
-                    } else {
-                        const newIdx = (currentMistakeIdx + delta + mistakeIndices.length) % mistakeIndices.length;
-                        quizIndex = mistakeIndices[newIdx];
-                    }
-                }
-            } else {
-                quizIndex = (quizIndex + delta + total) % total;
-            }
-            
-            clearQuizCanvas();
-            hideAnswerReveal();
-            updateQuizDisplay();
-        }
-
-        function quizGoRandom() {
-            const lang = languageData[currentLang];
-            const total = lang.consonants.length;
-            
-            if (quizMode === 'mistakes') {
-                const mistakeIndices = [];
-                for (let i = 0; i < total; i++) {
-                    const key = `${currentLang}_${i}`;
-                    if (quizResults[key] === 'incorrect') mistakeIndices.push(i);
-                }
-                if (mistakeIndices.length > 0) {
-                    quizIndex = mistakeIndices[Math.floor(Math.random() * mistakeIndices.length)];
-                } else {
-                    quizIndex = Math.floor(Math.random() * total);
-                }
-            } else {
-                quizIndex = Math.floor(Math.random() * total);
-            }
-            
-            clearQuizCanvas();
-            hideAnswerReveal();
-            updateQuizDisplay();
-        }
-
-        function jumpToQuizChar(index) {
-            quizIndex = index;
-            clearQuizCanvas();
-            hideAnswerReveal();
-            updateQuizDisplay();
-        }
-
-        // Reveal answer
-        function revealAnswer() {
-            answerRevealed = true;
-            const lang = languageData[currentLang];
-            const charData = lang.consonants[quizIndex];
-            
-            const answerEl = document.getElementById('answerChar');
-            answerEl.textContent = charData.char;
-            answerEl.className = `answer-char ${lang.fontClass}`;
-            
-            document.getElementById('answerReveal').classList.add('visible');
-            document.getElementById('quizNavButtons').style.display = 'none';
-        }
-
-        function hideAnswerReveal() {
-            answerRevealed = false;
-            document.getElementById('answerReveal').classList.remove('visible');
-            document.getElementById('quizNavButtons').style.display = 'flex';
-        }
-
-        // Mark quiz result
-        function markQuizResult(isCorrect) {
-            const key = `${currentLang}_${quizIndex}`;
-            quizResults[key] = isCorrect ? 'correct' : 'incorrect';
-            
-            if (isCorrect) {
-                quizCorrectCount++;
-                quizStreak++;
-            } else {
-                quizIncorrectCount++;
-                quizStreak = 0;
-            }
-            
-            updateQuizStats();
-            saveProgress();
-            
-            // Auto-advance after brief delay
-            setTimeout(() => {
-                quizNavigate(1);
-            }, 300);
-        }
-
-        // Update quiz stats display
-        function updateQuizStats() {
-            document.getElementById('quizCorrect').textContent = quizCorrectCount;
-            document.getElementById('quizIncorrect').textContent = quizIncorrectCount;
-            document.getElementById('quizStreak').textContent = quizStreak;
-        }
-
-        // Update quiz display
-        function updateQuizDisplay() {
-            const lang = languageData[currentLang];
-            
-            // Check if this language has Devanagari mappings
-            const hasDevanagari = lang.consonants[0].devanagari !== undefined;
-            
-            if (!hasDevanagari) {
-                // For languages without Devanagari (Japanese, Korean, Chinese), show romanization only
-                document.getElementById('quizDevanagari').textContent = '?';
-                document.getElementById('quizDevanagari').className = 'quiz-prompt';
-            } else {
-                const charData = lang.consonants[quizIndex];
-                document.getElementById('quizDevanagari').textContent = charData.devanagari;
-                document.getElementById('quizDevanagari').className = 'quiz-prompt devanagari';
-            }
-            
-            const charData = lang.consonants[quizIndex];
-            document.getElementById('quizRoman').textContent = charData.roman;
-            document.getElementById('quizDescription').textContent = 
-                `Character ${quizIndex + 1} of ${lang.consonants.length}`;
-            
-            updateQuizStats();
-            renderQuizCharGrid();
-        }
-
-        // Render quiz character grid
-        function renderQuizCharGrid() {
-            const container = document.getElementById('quizCharGrid');
-            const lang = languageData[currentLang];
-            
-            container.innerHTML = '';
-            
-            lang.consonants.forEach((charData, index) => {
-                const cell = document.createElement('div');
-                const key = `${currentLang}_${index}`;
-                cell.className = `char-cell quiz-grid-cell ${lang.fontClass}`;
-                
-                if (index === quizIndex) {
-                    cell.classList.add('current');
-                } else if (quizResults[key] === 'correct') {
-                    cell.classList.add('practiced', 'correct-answer');
-                } else if (quizResults[key] === 'incorrect') {
-                    cell.classList.add('unpracticed', 'incorrect-answer');
-                } else {
-                    cell.classList.add('unpracticed');
-                }
-                
-                // In quiz mode, show Devanagari or romanization instead of target char
-                if (charData.devanagari) {
-                    cell.textContent = charData.devanagari;
-                    cell.classList.remove(lang.fontClass);
-                    cell.classList.add('devanagari');
-                } else {
-                    cell.textContent = charData.roman.substring(0, 2);
-                    cell.style.fontSize = '0.8rem';
-                }
-                
-                cell.onclick = () => jumpToQuizChar(index);
                 container.appendChild(cell);
             });
         }

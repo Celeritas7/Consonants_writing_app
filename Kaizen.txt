@@ -1,0 +1,1 @@
+Want to keep the current app view as simple difficulty level study layout. And in addition to that I want the hard difficulty level where the consonants with vowels will be learnt. For that consider the inputs from the attached images. In the hard difficulty levelz the responses, writing practice, mistake entries, everything else should be same as the simple difficulty level.
